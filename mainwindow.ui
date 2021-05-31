@@ -41,6 +41,9 @@
       <height>21</height>
      </rect>
     </property>
+    <property name="text">
+     <string>COM3</string>
+    </property>
    </widget>
    <widget class="QTextEdit" name="log">
     <property name="geometry">
@@ -197,13 +200,16 @@
       <height>21</height>
      </rect>
     </property>
+    <property name="text">
+     <string>9600</string>
+    </property>
    </widget>
    <widget class="QLabel" name="speedLabel">
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>50</y>
-      <width>49</width>
+      <width>81</width>
       <height>21</height>
      </rect>
     </property>
@@ -223,7 +229,7 @@
      <x>0</x>
      <y>0</y>
      <width>626</width>
-     <height>20</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

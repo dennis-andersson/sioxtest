@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "Controller.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,6 +26,12 @@ private slots:
     void on_deactivatePort1_clicked();
 
 private:
+    void log(QString message);
+    void log(bool sent, std::vector<int> message);
+    QString hexstr(int n);
+    std::vector<int> parseHexString(QString input);
+
     Ui::MainWindow *ui;
+    Controller hw;
 };
 #endif // MAINWINDOW_H

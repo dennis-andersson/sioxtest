@@ -14,9 +14,9 @@ Controller::~Controller()
 		ExitSioxBus(bus);
 }
 
-bool Controller::init(QString port)
+bool Controller::init(QString port, int speed)
 {
-	bus = InitSioxBus((char*)port.toStdString().c_str(), 4800);
+    bus = InitSioxBus((char*)port.toStdString().c_str(), speed);
 
 	return (bus >= 0);
 }
@@ -89,17 +89,18 @@ std::vector<int> Controller::send(std::vector<int> message)
 
 	std::vector<int> response;
 
-	//for (char ch : message)
-	//	SendChar(bus, ch);
+    for (char ch : message)
+        SendChar(bus, ch);
 
-	//while (!CharReceived(bus))
-	//	Sleep(1);
+    while (!CharReceived(bus))
+        Sleep(1);
 
-	//while (CharReceived(bus))
-	//	response.push_back(GetChar(bus, 0));
+    while (CharReceived(bus))
+        response.push_back(GetChar(bus, 0));
 
-	response.push_back(0x12);
-	response.push_back(0x34);
+    // Debug stuff
+    //response.push_back(0x12);
+    //response.push_back(0x34);
 
 	return response;
 }

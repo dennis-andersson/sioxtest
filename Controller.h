@@ -8,15 +8,16 @@
 class Controller
 {
 	int portTable[12]{ 3, 4, 7, 8, 11, 12, 15, 16, 19, 20, 23, 24 };
-	int bus{ 0 };
 
-	QString hexstr(int n);
+    //QString hexstr(int n);
 
 public:
-	Controller();
+    int bus{ 0 };
+
+    Controller();
 	~Controller();
 
-	bool init(QString port);
+    bool init(QString port, int speed);
 
 	QString getErrorMessage();
 	QString result();
