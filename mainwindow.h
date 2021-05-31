@@ -15,6 +15,15 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_initButton_clicked();
+
+    void on_sendCommand_clicked();
+
+    void on_activatePort1_clicked();
+
+    void on_deactivatePort1_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
