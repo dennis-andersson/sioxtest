@@ -100,12 +100,28 @@ void MainWindow::on_sendCommand_clicked()
 
 void MainWindow::on_activatePort1_clicked()
 {
+    std::vector<int> command{ 0xc1, 0x01 };
+
     log("Activating port 1");
-    hw.activate(1);
+    log(true, command);
+    std::vector<int> response = hw.send(command);
+    log(false, response);
+
+    QString result = hw.result();
+
+    if (result.length() > 0) log(result);
 }
 
 void MainWindow::on_deactivatePort1_clicked()
 {
+    std::vector<int> command{ 0xc1, 0x00 };
+
     log("Deactivating port 1");
-    hw.deactivate(1);
+    log(true, command);
+    std::vector<int> response = hw.send(command);
+    log(false, response);
+
+    QString result = hw.result();
+
+    if (result.length() > 0) log(result);
 }
