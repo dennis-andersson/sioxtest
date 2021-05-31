@@ -21,69 +21,9 @@ bool Controller::init(QString port, int speed)
 	return (bus >= 0);
 }
 
-void Controller::test()
-{
-	//// Activate 2 of seven outputs
-	//std::vector<int> message{ 0xc1, 0x03 };
-	//std::vector<int> answer;
-
-	//answer = send(message);
-
-	//if (answer.size() == 2) {
-	//	int passive = answer[0];
-	//	int active = answer[1];
-	//}
-}
-
-std::vector<int> Controller::showTargets()
-{
-	return { 0 };
-}
-
-std::vector<int> Controller::hideTargets()
-{
-	return { 0 };
-	//std::vector<int> message{ 0xc1, 0x02 };
-
-	//return send(message);
-}
-
-std::vector<int> Controller::activate(int port)
-{
-	int n = 1 << (port - 1);
-
-	std::vector<int> message{ 0xc1, n };
-
-	return send(message);
-}
-
-std::vector<int> Controller::deactivate(int port)
-{
-	int n = 0;
-
-	std::vector<int> message{ 0xc1, n };
-
-	return send(message);
-}
-
-std::vector<int> Controller::activateBoth()
-{
-	std::vector<int> message{ 0xc1, 0x03 };
-
-	return send(message);
-}
-
-std::vector<int> Controller::deactivateBoth()
-{
-	std::vector<int> message{ 0xc1, 0x00 };
-
-	return send(message);
-}
-
 std::vector<int> Controller::send(std::vector<int> message)
 {
 	if (bus < 0) {
-		//logger.log("No valid bus handle");
 		return { 0 };
 	}
 
@@ -97,10 +37,6 @@ std::vector<int> Controller::send(std::vector<int> message)
 
     while (CharReceived(bus))
         response.push_back(GetChar(bus, 0));
-
-    // Debug stuff
-    //response.push_back(0x12);
-    //response.push_back(0x34);
 
 	return response;
 }
