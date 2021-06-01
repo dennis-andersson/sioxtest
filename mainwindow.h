@@ -25,6 +25,10 @@ private slots:
 
     void on_deactivatePort1_clicked();
 
+    void on_testSioxData_clicked();
+
+    void on_testSioxTextEx_clicked();
+
 private:
     void log(QString message);
     void log(bool sent, std::vector<int> message);

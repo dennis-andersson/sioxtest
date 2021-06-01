@@ -1,6 +1,9 @@
+#include <Siox30.h>
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QRegularExpression>
+#include <vector>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -46,8 +49,6 @@ QString MainWindow::hexstr(int n)
 
     return result;
 }
-
-
 
 void MainWindow::on_initButton_clicked()
 {
@@ -125,3 +126,60 @@ void MainWindow::on_deactivatePort1_clicked()
 
     if (result.length() > 0) log(result);
 }
+
+void MainWindow::on_testSioxData_clicked()
+{
+    if (ui->outputTextBox->text().length() == 0) return;
+    if (ui->stationAddressTextBox->text().length() == 0) return;
+
+    int *input = new int[50];
+    std::vector<int> outputs = parseHexString(ui->outputTextBox->text());
+    int output = outputs[0];
+    int outputCount = 1;
+    int bus = hw.bus;
+    unsigned int stationAddress = ui->stationAddressTextBox->text().toInt();
+    int silent;
+
+    QString text = QString::asprintf("SioxData bus %d address %d output 0x%x", bus, stationAddress, output);
+    log(text);
+    SioxData(bus, stationAddress, output, outputCount, input, &silent);
+    text = QString::asprintf("Input:\t%s\nInputCount:\t%d\nSilent:\t%d\nBusy:\t%d\n", input, silent);
+
+    delete[] input;
+}
+
+void MainWindow::on_testSioxTextEx_clicked()
+{
+    if (ui->outputTextBox->text().length() == 0) return;
+    if (ui->groupAddressTextBox->text().length() == 0) return;
+    if (ui->stationAddressTextBox->text().length() == 0) return;
+
+    std::vector<int> outputs = parseHexString(ui->outputTextBox->text());
+    int outputCount = outputs.size();
+    char *output = new char[outputCount + 1];
+    char *input = new char[50];
+    int inputCount;
+    int bus = hw.bus;
+    unsigned int groupAddress = ui->groupAddressTextBox->text().toInt();
+    unsigned int stationAddress = ui->stationAddressTextBox->text().toInt();
+    int numbered = 0;
+    int silent;
+    int busy;
+
+    for (int i = 0; i < outputCount; ++i)
+        output[i] = (char) outputs[i];
+    output[outputCount] = '\0';
+
+    QString text = QString::asprintf("SioxTextEx bus %d groupAddress %d stationAddress %d output ", bus, groupAddress, stationAddress);
+
+    for (int i = 0; i < outputCount; ++i)
+        text += QString::asprintf("0x%x ", output[i]);
+
+    log(text);
+    SioxTextEx(bus, groupAddress, stationAddress, output, outputCount, input, &inputCount, numbered, &silent, &busy);
+    text = QString::asprintf("Input:\t%s\nInputCount:\t%d\nSilent:\t%d\nBusy:\t%d\n", input, inputCount, silent, busy);
+
+    delete[] output;
+    delete[] input;
+}
+
